@@ -357,7 +357,8 @@ abstract class File implements FileInterface, \Countable
     }
 
     /**
-     * Sorts cues
+     * Sorts cues by start time, then stop time, keeping the original
+     * insertion order for cues with identical time boundaries.
      */
     public function sortCues(): self
     {
@@ -365,19 +366,18 @@ abstract class File implements FileInterface, \Countable
             return $this;
         }
 
-        $tmp = [];
-
-        $count = 0; // useful if 2 cues start at the same time code
-        foreach ($this->cues as $cue) {
-            $tmp[$cue->getStartMS().'.'.$count] = $cue;
-            $count++;
+        $decorated = [];
+        foreach (array_values($this->cues) as $index => $cue) {
+            $decorated[] = [$cue->getStartMS(), $cue->getStopMS(), $index, $cue];
         }
 
-        ksort($tmp);
+        usort($decorated, function (array $a, array $b) {
+            return [$a[0], $a[1], $a[2]] <=> [$b[0], $b[1], $b[2]];
+        });
 
         $this->cues = [];
-        foreach ($tmp as $cue) {
-            $this->cues[] = $cue;
+        foreach ($decorated as $item) {
+            $this->cues[] = $item[3];
         }
 
         return $this;
@@ -643,6 +643,8 @@ abstract class File implements FileInterface, \Countable
      */
     public function convertTo(string $_output_format): FileInterface
     {
+        Converter::resetConversionLosses();
+
         $fileFormat = self::getFormat($this);
         $method     = strtolower($fileFormat).'2'.strtolower(rtrim($_output_format, 'File'));
 

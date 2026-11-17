@@ -20,6 +20,29 @@ composer require captioning/captioning "2.*"
 
 Examples and snippets in the [wiki](https://github.com/captioning/captioning/wiki).
 
+## Format conversion
+
+``` php
+$vtt = new \Captioning\Format\WebvttFile('captions.vtt');
+$srt = $vtt->convertTo('subrip');
+$srt->save('captions.srt');
+```
+
+Conversion keeps every cue field that has an equivalent in the target
+format. WebVTT cue settings (`align`, `position`, `line`) are mapped to
+an ASS alignment tag (`{\anN}`) when converting to Subrip, and mapped
+back to cue settings when converting from Subrip to WebVTT.
+
+Fields with no equivalent in the target format are dropped but reported;
+inspect them after a conversion:
+
+``` php
+$vtt->convertTo('subrip');
+print_r(\Captioning\Converter::getConversionLosses());
+// each entry: ['cue' => int|null, 'field' => string, 'value' => mixed, 'reason' => string]
+```
+
+
 # TODO-list
 * [Substation Alpha] add dynamic parsing if events format is not the default one
 * [WebVTT] Check if the region defined in WebvttFile object in WebvttCue::checkSetting()

@@ -58,6 +58,11 @@ class WebvttCue extends Cue
         return $this->identifier;
     }
 
+    public function getNote()
+    {
+        return $this->note;
+    }
+
     public static function checkSetting($_name, $_value): bool
     {
         switch ($_name) {

@@ -11,7 +11,7 @@ class SubripCue extends Cue
         $tab = array_reverse(explode(':', $_timecode));
         $tab[2] = $tab[2] ?? 0;
 
-        return $tab[2] * 60 * 60 * 1000 + $tab[1] * 60 * 1000 + (float)str_replace(',', '.', $tab[0]) * 1000;
+        return (int) round($tab[2] * 60 * 60 * 1000 + $tab[1] * 60 * 1000 + (float)str_replace(',', '.', $tab[0]) * 1000);
     }
 
     /**

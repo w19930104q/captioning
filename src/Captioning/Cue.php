@@ -258,7 +258,12 @@ abstract class Cue implements CueInterface
      */
     public function getCPS(): float
     {
-        return round($this->strlen() / ($this->getDuration() / 1000), 1);
+        $duration = $this->getDuration();
+        if ($duration <= 0) {
+            return 0.0;
+        }
+
+        return round($this->strlen() / ($duration / 1000), 1);
     }
 
     /**
@@ -344,7 +349,7 @@ abstract class Cue implements CueInterface
         $x /= 60;
         $tc_m = floor((int)$x % 60);
         $x /= 60;
-        $tc_h = floor((int)$x % 24);
+        $tc_h = floor($x);
 
         if ($isHoursPaddingEnabled) {
             $timecode = str_pad($tc_h, 2, '0', STR_PAD_LEFT).':';

@@ -49,28 +49,28 @@ OK, let's go.
 
         $content = "1
 00:00:00,000 --> 00:00:20,000
-<v Fred>Hi, my name is Fred,
+{\an1}<v Fred>Hi, my name is Fred,
 nice to meet you.
 
 2
 00:00:02,500 --> 00:00:22,500
-<v Bill>Hi, I'm Bill.
+{\an3}<v Bill>Hi, I'm Bill.
 
 3
 00:00:05,000 --> 00:00:25,000
-<v Fred>Would you like to get a coffee?
+{\an1}<v Fred>Would you like to get a coffee?
 
 4
 00:00:07,500 --> 00:00:27,500
-<v Bill>Sure! I've only had one today.
+{\an3}<v Bill>Sure! I've only had one today.
 
 5
 00:00:10,000 --> 00:00:30,000
-<v Fred>This is my fourth!
+{\an1}<v Fred>This is my fourth!
 
 6
 00:00:12,500 --> 00:00:32,500
-<v Fred>OK, let's go.
+{\an1}<v Fred>OK, let's go.
 
 ";
 

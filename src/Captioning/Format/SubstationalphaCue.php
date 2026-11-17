@@ -44,6 +44,8 @@ class SubstationalphaCue extends Cue
      */
     public function setText(string $_text): Cue
     {
+        parent::setText($_text);
+
         $this->text = preg_replace('#\r\n|\r|\n#', '\N', trim($_text));
 
         return $this;
